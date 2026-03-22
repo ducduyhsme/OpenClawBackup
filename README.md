@@ -19,13 +19,14 @@ Typical contents include:
 
 Exact contents depend on what existed on the source machine when the backup was created.
 
-## Restore OpenClaw on another computer
+## Fastest restore options
 
-This repo now includes restore instructions for Linux, macOS, and Windows, plus helper scripts you can run directly.
+This repo now supports two levels of restore automation:
 
-## One-command / one-script restore
+1. **Restore from a local backup file you already downloaded**
+2. **Download the latest GitHub release asset automatically and restore it**
 
-After downloading a backup archive, you can restore it with one command on Linux/macOS or one PowerShell command on Windows.
+## Restore from a local backup file
 
 ### Linux
 
@@ -45,10 +46,39 @@ bash scripts/restore-macos.sh /path/to/openclaw-backup.tar.gz
 powershell -ExecutionPolicy Bypass -File .\scripts\restore-windows.ps1 -ArchivePath C:\path\to\openclaw-backup.tar.gz
 ```
 
+## Download latest release asset automatically, then restore
+
+These scripts fetch the newest `.tar.gz` asset from the latest GitHub release in `ducduyhsme/OpenClawBackup`, then hand off to the normal restore script.
+
+### Requirements for auto-download scripts
+
+- GitHub CLI (`gh`) installed
+- `gh auth login` already completed
+- access to the private repository/releases
+
+### Linux
+
+```bash
+bash scripts/restore-latest-linux.sh
+```
+
+### macOS
+
+```bash
+bash scripts/restore-latest-macos.sh
+```
+
+### Windows (PowerShell)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\restore-latest-windows.ps1
+```
+
 What the scripts do:
 - install OpenClaw if missing
 - stop running OpenClaw processes
 - back up any existing `.openclaw`
+- download the latest release asset automatically if you use the `restore-latest-*` scripts
 - extract the backup into your home directory
 - leave you ready to run `openclaw status`
 
@@ -64,6 +94,18 @@ sudo apt install -y curl git tar
 ```
 
 Install Node.js first if it is not already present.
+
+If you want automatic release downloads, also install GitHub CLI:
+
+```bash
+sudo apt install -y gh
+```
+
+Then authenticate:
+
+```bash
+gh auth login
+```
 
 ### 2. Install OpenClaw
 
@@ -83,16 +125,16 @@ If you use a service manager, stop it there instead.
 
 ### 4. Download the backup archive
 
-Example:
+Manual example:
 
 ```bash
 wget -O openclaw-backup.tar.gz "PASTE_RELEASE_ASSET_URL_HERE"
 ```
 
-Or if you cloned the repo and want the tracked backup file:
+Or use the automatic script:
 
 ```bash
-cp "backups/<backup-file>.tar.gz" ./openclaw-backup.tar.gz
+bash scripts/restore-latest-linux.sh
 ```
 
 ### 5. Back up the current machine state
@@ -130,13 +172,19 @@ These steps are meant for moving or recovering OpenClaw onto a Mac.
 Install:
 - Node.js
 - `tar` (already included on macOS)
-- optionally Homebrew if you use it for Node.js management
+- optionally Homebrew if you use it for package management
 
 If you use Homebrew, a typical setup is:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install node
+brew install node gh
+```
+
+Then authenticate GitHub CLI if you want automatic latest-release downloads:
+
+```bash
+gh auth login
 ```
 
 ### 2. Install OpenClaw
@@ -153,7 +201,13 @@ pkill -x openclaw-gateway || true
 
 ### 4. Download the backup archive
 
-Download the `.tar.gz` backup from this repo or from a release asset.
+Manual: download the `.tar.gz` backup from this repo or from a release asset.
+
+Automatic:
+
+```bash
+bash scripts/restore-latest-macos.sh
+```
 
 ### 5. Back up the current machine state
 
@@ -188,8 +242,15 @@ These steps are meant for restoring OpenClaw onto Windows.
 
 Install:
 - Node.js
+- GitHub CLI (`gh`) if you want automatic latest-release downloads
 - Git for Windows or another environment that gives you `tar`, if your Windows build does not already include it
 - PowerShell (already included on modern Windows)
+
+Authenticate GitHub CLI if you want automatic downloads:
+
+```powershell
+gh auth login
+```
 
 ### 2. Install OpenClaw
 
@@ -203,14 +264,20 @@ npm install -g openclaw
 
 If OpenClaw is running, stop it before extracting the backup.
 
-You can use the helper script below, which attempts to stop matching OpenClaw processes safely.
+You can use the helper scripts below, which attempt to stop matching OpenClaw processes safely.
 
 ### 4. Download the backup archive
 
-Put the `.tar.gz` file somewhere convenient, for example:
+Manual:
 
 ```text
 C:\Users\YourName\Downloads\openclaw-backup.tar.gz
+```
+
+Automatic:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\restore-latest-windows.ps1
 ```
 
 ### 5. Back up the current machine state
@@ -247,23 +314,31 @@ If you want the least messy migration path on a new computer:
 
 1. Install Node.js
 2. Install OpenClaw
-3. Do **not** configure a lot of new data yet
-4. Stop OpenClaw
-5. Restore the backup archive
-6. Fix ownership/permissions if needed
-7. Start OpenClaw
-8. Verify with `openclaw status`
+3. Install/authenticate GitHub CLI if you want automatic latest-release downloads
+4. Do **not** configure a lot of new data yet
+5. Stop OpenClaw
+6. Restore the backup archive
+7. Fix ownership/permissions if needed
+8. Start OpenClaw
+9. Verify with `openclaw status`
 
 ## Files in this repo for restore
 
+Manual/local-archive restore:
 - `scripts/restore-linux.sh`
 - `scripts/restore-macos.sh`
 - `scripts/restore-windows.ps1`
+
+Automatic latest-release download + restore:
+- `scripts/restore-latest-linux.sh`
+- `scripts/restore-latest-macos.sh`
+- `scripts/restore-latest-windows.ps1`
 
 ## Notes
 
 - Backups are created in UTC.
 - The repo keeps only the latest backup file in `backups/`.
 - Releases may still preserve older restore points as attached assets.
+- Automatic latest-release scripts intentionally use GitHub releases, not the tracked `backups/` file, because release assets are a better place for larger archives.
 - If OpenClaw changes its internal storage layout in the future, restore steps may need slight adjustment.
 - If something goes wrong, restore your saved `.openclaw.before-restore-*` backup folder.
