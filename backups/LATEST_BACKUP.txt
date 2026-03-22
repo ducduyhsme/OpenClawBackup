@@ -1,5 +1,6 @@
 Latest backup: 11 22-03-2026.tar.gz
 Created (UTC): 11 22-03-2026
-Size bytes: 413652373
+Size bytes: 413660300
 Repository storage: Git LFS
-Restore source: git clone + git lfs pull (or GitHub repo download with LFS support)
+Release asset: yes
+Restore source: latest backup in repo via git-lfs, historical points via GitHub Releases
