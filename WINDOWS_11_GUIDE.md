@@ -7,13 +7,13 @@ This guide explains how to restore an OpenClaw backup on Windows 11.
 ### Restore from a local backup file
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\restore-windows.ps1 -ArchivePath C:\path\to\openclaw-backup.tar.gz
+powershell -ExecutionPolicy Bypass -File .\scripts\windows\restore-windows.ps1 -ArchivePath C:\path\to\openclaw-backup.tar.gz
 ```
 
 ### Download the latest release asset automatically, then restore
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\restore-latest-windows.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\windows\restore-latest-windows.ps1
 ```
 
 ## Requirements
@@ -57,7 +57,7 @@ C:\Users\YourName\Downloads\openclaw-backup.tar.gz
 Automatic:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\restore-latest-windows.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\windows\restore-latest-windows.ps1
 ```
 
 ### 4. Back up the current machine state
@@ -90,8 +90,8 @@ openclaw gateway start
 
 ## Included scripts
 
-- `scripts/restore-windows.ps1`
-- `scripts/restore-latest-windows.ps1`
+- `scripts/windows/restore-windows.ps1`
+- `scripts/windows/restore-latest-windows.ps1`
 
 ## Notes
 

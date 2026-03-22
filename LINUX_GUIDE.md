@@ -7,13 +7,13 @@ This guide explains how to restore an OpenClaw backup on Linux.
 ### Restore from a local backup file
 
 ```bash
-bash scripts/restore-linux.sh /path/to/openclaw-backup.tar.gz
+bash scripts/linux/restore-linux.sh /path/to/openclaw-backup.tar.gz
 ```
 
 ### Download the latest release asset automatically, then restore
 
 ```bash
-bash scripts/restore-latest-linux.sh
+bash scripts/linux/restore-latest-linux.sh
 ```
 
 ## Requirements
@@ -63,7 +63,7 @@ wget -O openclaw-backup.tar.gz "PASTE_RELEASE_ASSET_URL_HERE"
 Or use the automatic script:
 
 ```bash
-bash scripts/restore-latest-linux.sh
+bash scripts/linux/restore-latest-linux.sh
 ```
 
 ### 4. Back up the current machine state
@@ -94,8 +94,8 @@ openclaw status
 
 ## Included scripts
 
-- `scripts/restore-linux.sh`
-- `scripts/restore-latest-linux.sh`
+- `scripts/linux/restore-linux.sh`
+- `scripts/linux/restore-latest-linux.sh`
 
 ## Notes
 

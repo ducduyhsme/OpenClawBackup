@@ -21,23 +21,36 @@ Exact contents depend on what existed on the source machine when the backup was 
 
 ## Restore guides
 
-Platform-specific restore instructions now live in separate guide files:
+Platform-specific restore instructions live in separate guide files:
 
 - [Linux restore guide](./LINUX_GUIDE.md)
 - [macOS restore guide](./MACOS_GUIDE.md)
 - [Windows 11 restore guide](./WINDOWS_11_GUIDE.md)
 
+## Script layout
+
+Scripts are now grouped by platform:
+
+- `scripts/linux/`
+- `scripts/macos/`
+- `scripts/windows/`
+
 ## Restore scripts included in this repo
 
-Manual/local-archive restore:
-- `scripts/restore-linux.sh`
-- `scripts/restore-macos.sh`
-- `scripts/restore-windows.ps1`
+### Linux
 
-Automatic latest-release download + restore:
-- `scripts/restore-latest-linux.sh`
-- `scripts/restore-latest-macos.sh`
-- `scripts/restore-latest-windows.ps1`
+- `scripts/linux/restore-linux.sh`
+- `scripts/linux/restore-latest-linux.sh`
+
+### macOS
+
+- `scripts/macos/restore-macos.sh`
+- `scripts/macos/restore-latest-macos.sh`
+
+### Windows 11
+
+- `scripts/windows/restore-windows.ps1`
+- `scripts/windows/restore-latest-windows.ps1`
 
 ## Fastest commands
 
@@ -46,13 +59,13 @@ Automatic latest-release download + restore:
 Restore from a local archive:
 
 ```bash
-bash scripts/restore-linux.sh /path/to/openclaw-backup.tar.gz
+bash scripts/linux/restore-linux.sh /path/to/openclaw-backup.tar.gz
 ```
 
 Download latest release asset automatically, then restore:
 
 ```bash
-bash scripts/restore-latest-linux.sh
+bash scripts/linux/restore-latest-linux.sh
 ```
 
 ### macOS
@@ -60,13 +73,13 @@ bash scripts/restore-latest-linux.sh
 Restore from a local archive:
 
 ```bash
-bash scripts/restore-macos.sh /path/to/openclaw-backup.tar.gz
+bash scripts/macos/restore-macos.sh /path/to/openclaw-backup.tar.gz
 ```
 
 Download latest release asset automatically, then restore:
 
 ```bash
-bash scripts/restore-latest-macos.sh
+bash scripts/macos/restore-latest-macos.sh
 ```
 
 ### Windows 11
@@ -74,13 +87,13 @@ bash scripts/restore-latest-macos.sh
 Restore from a local archive:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\restore-windows.ps1 -ArchivePath C:\path\to\openclaw-backup.tar.gz
+powershell -ExecutionPolicy Bypass -File .\scripts\windows\restore-windows.ps1 -ArchivePath C:\path\to\openclaw-backup.tar.gz
 ```
 
 Download latest release asset automatically, then restore:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\restore-latest-windows.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\windows\restore-latest-windows.ps1
 ```
 
 ## Notes

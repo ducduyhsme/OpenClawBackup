@@ -7,13 +7,13 @@ This guide explains how to restore an OpenClaw backup on macOS.
 ### Restore from a local backup file
 
 ```bash
-bash scripts/restore-macos.sh /path/to/openclaw-backup.tar.gz
+bash scripts/macos/restore-macos.sh /path/to/openclaw-backup.tar.gz
 ```
 
 ### Download the latest release asset automatically, then restore
 
 ```bash
-bash scripts/restore-latest-macos.sh
+bash scripts/macos/restore-latest-macos.sh
 ```
 
 ## Requirements
@@ -57,7 +57,7 @@ Manual: download the `.tar.gz` backup from this repo or from a release asset.
 Automatic:
 
 ```bash
-bash scripts/restore-latest-macos.sh
+bash scripts/macos/restore-latest-macos.sh
 ```
 
 ### 4. Back up the current machine state
@@ -87,8 +87,8 @@ openclaw status
 
 ## Included scripts
 
-- `scripts/restore-macos.sh`
-- `scripts/restore-latest-macos.sh`
+- `scripts/macos/restore-macos.sh`
+- `scripts/macos/restore-latest-macos.sh`
 
 ## Notes
 
